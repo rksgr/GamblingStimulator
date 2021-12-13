@@ -46,31 +46,39 @@ public class GamblingSituationProblem {
     Use case 4
     */
     public void gamblingSituationProblemUC4(){
-        int daily_amt = 0;
+        //margin = 50%
+        double uppr_margin = 0.5*INITIAL_BET_STAKE;
+        double lowr_margin = -0.5*INITIAL_BET_STAKE;
+        double tot_amt_won_lost = 0;
         // Game played for 20 days
         for (int i=0;i<20;i++){
-            double random_num = Math.random();
-            if (random_num>0.5){
-                daily_amt += BET_AMT;
+            double daily_amt_won_lost = 0;
+            // Everyday game stops at 50% margin
+            while ((daily_amt_won_lost<uppr_margin) && (daily_amt_won_lost>lowr_margin)){
+                double random_num = Math.random();
+                if (random_num>0.5){
+                    daily_amt_won_lost += BET_AMT;
+                }else if (random_num<=0.5){
+                    daily_amt_won_lost -= BET_AMT;
+                }
             }
-            else if (random_num<=0.5){
-                daily_amt -= BET_AMT;
-            }
+            System.out.println("The amount lost or gained daily = " + daily_amt_won_lost);
+            tot_amt_won_lost += daily_amt_won_lost;
+            
         }
         // Print total amount won or last in 20 days
-        if (daily_amt>0){
-            System.out.println("The total amount won in 20 days = "+ daily_amt);
+        if (tot_amt_won_lost>0){
+            System.out.println("The total amount won in 20 days = "+ tot_amt_won_lost);
         }
-        else if (daily_amt==0){
+        else if (tot_amt_won_lost==0){
             System.out.println("There is no net gain in last 20 days");
         }
-        else if (daily_amt<0){
-            System.out.println("The total amount lost in last 20 days = "+ Math.abs(daily_amt));
+        else if (tot_amt_won_lost<0){
+            System.out.println("The total amount lost in last 20 days = "+ Math.abs(tot_amt_won_lost));
         }
     }
     public static void main(String []args){
         GamblingSituationProblem gsp = new GamblingSituationProblem();
-        //gsp.gamblingSituationProblemUC2(); 
         gsp.gamblingSituationProblemUC4();
         
     }
