@@ -42,10 +42,36 @@ public class GamblingSituationProblem {
         System.out.println("The gambler resigns for the day after he has $"
         + avail_amt + " with him.");
     }
+    /*
+    Use case 4
+    */
+    public void gamblingSituationProblemUC4(){
+        int daily_amt = 0;
+        // Game played for 20 days
+        for (int i=0;i<20;i++){
+            double random_num = Math.random();
+            if (random_num>0.5){
+                daily_amt += BET_AMT;
+            }
+            else if (random_num<=0.5){
+                daily_amt -= BET_AMT;
+            }
+        }
+        // Print total amount won or last in 20 days
+        if (daily_amt>0){
+            System.out.println("The total amount won in 20 days = "+ daily_amt);
+        }
+        else if (daily_amt==0){
+            System.out.println("There is no net gain in last 20 days");
+        }
+        else if (daily_amt<0){
+            System.out.println("The total amount lost in last 20 days = "+ Math.abs(daily_amt));
+        }
+    }
     public static void main(String []args){
-        GamblingSituationProblem gsp2 = new GamblingSituationProblem();
-        //gsp2.gamblingSituationProblemUC2(); 
-        GamblingSituationProblem gsp3 = new GamblingSituationProblem();
-        gsp3.gamblingSituationProblemUC3(50);
+        GamblingSituationProblem gsp = new GamblingSituationProblem();
+        //gsp.gamblingSituationProblemUC2(); 
+        gsp.gamblingSituationProblemUC4();
+        
     }
 }
