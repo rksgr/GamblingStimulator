@@ -46,22 +46,24 @@ public class GamblingSituationProblem {
     Use case 4
     */
     public void gamblingSituationProblemUC4(){
+        // Assume 100 bets played every day
         int NO_OF_BETS = 100;
         //margin = 50%
         double uppr_margin = 0.5*INITIAL_BET_STAKE;
         double lowr_margin = -0.5*INITIAL_BET_STAKE;
         double tot_amt_won_lost = 0;
-        
+ 
         // Game played for 20 days
         for (int i=0;i<20;i++){
             double daily_amt_won_lost = 0;
-            // Assume 100 bets played every day
             int bets_played = 0;
+            
             // Everyday game stops at 50% margin
             while ((daily_amt_won_lost<uppr_margin) && (daily_amt_won_lost>lowr_margin)
                     && (bets_played < NO_OF_BETS)){
                 double random_num = Math.random();
                 bets_played++;
+                
                 if (random_num>0.5){
                     daily_amt_won_lost += BET_AMT;
                 }else if (random_num<=0.5){
@@ -70,6 +72,7 @@ public class GamblingSituationProblem {
             }
             tot_amt_won_lost += daily_amt_won_lost;   
         }
+        
         // Print total amount won or last in 20 days
         if (tot_amt_won_lost>0){
             System.out.println("The total amount won in 20 days = "+ tot_amt_won_lost);
@@ -81,8 +84,48 @@ public class GamblingSituationProblem {
             System.out.println("The total amount lost in last 20 days = "+ Math.abs(tot_amt_won_lost));
         }
     }
+    /*
+    Use case 5 
+    */
+    public void gamblingSituationProblemUC5(){
+        // Assume 100 bets played every day
+        int NO_OF_BETS = 100;
+        //margin = 50%
+        double uppr_margin = 0.5*INITIAL_BET_STAKE;
+        double lowr_margin = -0.5*INITIAL_BET_STAKE;
+        double tot_amt_won_lost = 0;
+        // Game played for a month
+        for (int i=1;i<31;i++){
+            double daily_amt_won_lost = 0;
+            int bets_played = 0;
+            
+            // Everyday game stops at 50% margin or before 100 bets, whichever comes earlier
+            while ((daily_amt_won_lost<uppr_margin) && (daily_amt_won_lost>lowr_margin)
+                    && (bets_played < NO_OF_BETS)){
+                double random_num = Math.random();
+                bets_played++;
+                //check whether he wins or loses the bet
+                if (random_num>0.5){
+                    daily_amt_won_lost += BET_AMT;
+                }else if (random_num<=0.5){
+                    daily_amt_won_lost -= BET_AMT;
+                }
+            }
+            
+            // Print total amount won or last on this day
+            if (daily_amt_won_lost>0){
+                System.out.println("The amount won on day "+ i + " = $"+daily_amt_won_lost);
+            }
+            else if (daily_amt_won_lost==0){
+                System.out.println("There is no net gain or loss on day "+ i);
+            }
+            else if (daily_amt_won_lost<0){
+                System.out.println("The amount lost on day "+ i + " = $" + Math.abs(daily_amt_won_lost));
+            }
+        }
+    }
     public static void main(String []args){
         GamblingSituationProblem gsp = new GamblingSituationProblem();
-        gsp.gamblingSituationProblemUC4();      
+        gsp.gamblingSituationProblemUC5();      
     }
 }
